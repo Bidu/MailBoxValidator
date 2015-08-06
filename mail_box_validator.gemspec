@@ -6,10 +6,10 @@ require 'mail_box_validator/version'
 Gem::Specification.new do |spec|
   spec.name          = "mail_box_validator"
   spec.version       = MailBoxValidator::VERSION
-  spec.authors       = ["Vinicius Tadeu"]
-  spec.email         = ["vinicius.goncalves@bidu.com.br"]
-  spec.summary       = %q{TODO: Write a short summary. Required.}
-  spec.description   = %q{TODO: Write a longer description. Optional.}
+  spec.authors       = ['Bidu Developers']
+  spec.email         = ['dev@bidu.com.br']
+  spec.summary       = 'Check if email box is valid'
+
   spec.homepage      = ""
   spec.license       = "MIT"
 
