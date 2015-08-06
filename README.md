@@ -18,7 +18,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+    MailBoxValidator::MailBox.instance.valid?(mail_address)
 
 ## Contributing
 
