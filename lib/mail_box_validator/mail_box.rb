@@ -7,12 +7,12 @@ module MailBoxValidator
     def valid?(mail_address)
       domain = mail_address.slice(/@(.*)/, 1)
       mx = mail_exchanger_record_for(domain)
-      mx.present? && mx.all?(&return_valid?)
+      mx.present? && mx.all?(&return_valid?(mail_address))
     end
 
     private
 
-    def return_valid?
+    def return_valid?(mail_address)
       Proc.new do |host|
         response_for(mail_address, host).match(/^2\d{2}/).present?
       end
