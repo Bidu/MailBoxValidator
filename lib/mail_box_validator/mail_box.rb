@@ -7,7 +7,13 @@ module MailBoxValidator
     def valid?(mail_address)
       domain = mail_address.slice(/@(.*)/, 1)
       mx = mail_exchanger_record_for(domain)
-      mx.present? && mx.all?(&return_valid?(mail_address))
+      mx.present? && mx.any?(&return_valid?(mail_address))
+    end
+
+    def mail_exchanger_record_for(domain)
+      Resolv::DNS.open do |dns|
+        dns.getresources(domain, Resolv::DNS::Resource::IN::MX).map { |r| r.exchange.to_s }
+      end
     end
 
     private
@@ -26,17 +32,11 @@ module MailBoxValidator
         'Telnetmode' => true,
         'Prompt' => /\d{3}.*/n
         )
-      telnet.cmd('helo hi')
+      telnet.cmd('helo #{mail_address}')
       telnet.cmd("mail from: <#{mail_address}>")
       telnet.cmd("rcpt to: <#{mail_address}>") { |c| response = c }
       telnet.close
       response
-    end
-
-    def mail_exchanger_record_for(domain)
-      Resolv::DNS.open do |dns|
-        dns.getresources(domain, Resolv::DNS::Resource::IN::MX).map { |r| r.exchange.to_s }
-      end
     end
   end
 end
