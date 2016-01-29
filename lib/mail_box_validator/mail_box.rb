@@ -1,4 +1,5 @@
 require 'net/telnet'
+require 'singleton'
 
 module MailBoxValidator
   class MailBox
